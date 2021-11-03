@@ -26,7 +26,7 @@ export default {
   },
   methods: {    
     startGame(){
-      this.delay = 2000 + Math.random() * 7000
+      this.delay = 2000 + Math.random() * 100
       this.Playing = true
       this.showResults = false
     },

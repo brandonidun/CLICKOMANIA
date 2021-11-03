@@ -1,5 +1,5 @@
 <template>
-  <div class="block" v-if="showBlock" @click="stopTimer()">
+  <div class="block" v-if="showBlock" @click="stopTimer()" :style="{left: x +'px', top: y +'px'}">
     <div class="reaction-card">
     <h1>CLICK!</h1>
     </div> 
@@ -22,6 +22,8 @@ mounted(){
 setTimeout(() => {
   this.showBlock = true
   this.startTimer()
+  this.appear()
+  console.log("done")
 }, this.delay)
 },
 
@@ -36,8 +38,12 @@ methods: {
     this.showBlock= false
     clearInterval(this.time)
     this.$emit("end", this.reactionTime)
-    }
-  }
+    },
+  appear(){
+    this.x = 50 + Math.random()* 1400
+    this.y = 50 + Math.random()* 800
+  },
+}
 }
 </script>
 
@@ -47,6 +53,7 @@ methods: {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
 }
 .reaction-card {
   background-color: pink;
