@@ -1,7 +1,7 @@
 <template>
   <div class="block" v-if="showBlock" @click="stopTimer()" :style="{left: x +'px', top: y +'px'}">
     <div class="reaction-card">
-    <h1>CLICK!</h1>
+    <h2>CLICK!</h2>
     </div> 
   </div>
 </template>
@@ -22,7 +22,7 @@ mounted(){
 setTimeout(() => {
   this.showBlock = true
   this.startTimer()
-  this.appear()
+  this.divLocation()
   console.log("done")
 }, this.delay)
 },
@@ -39,9 +39,9 @@ methods: {
     clearInterval(this.time)
     this.$emit("end", this.reactionTime)
     },
-  appear(){
-    this.x = 50 + Math.random()* 1400
-    this.y = 50 + Math.random()* 800
+  divLocation(){
+    this.x = 50 + Math.random()*1428
+    this.y = 50 + Math.random()*685
   },
 }
 }
@@ -56,12 +56,15 @@ methods: {
   position: fixed;
 }
 .reaction-card {
-  background-color: pink;
+  background-color: grey;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 1000px;
   width: 200px;
   height: 200px;
+}
+h2{
+  color: white;
 }
 </style>
