@@ -8,7 +8,7 @@
 
 <script>
 export default {
-props: ['delay'],
+props: ['delay', 'gameTime'],
 data(){
   return {
     showBlock: false,
@@ -16,6 +16,8 @@ data(){
     reactionTime: 0,
     x: null,
     y: null,
+    clicks: null,
+    totalClicks: 0,
   }
 },
 mounted(){
@@ -30,14 +32,18 @@ setTimeout(() => {
 methods: {
   startTimer(){
     this.showBlock= true
-    this.time = setInterval(() => {
-      this.reactionTime += 10
-      },10)
+    // this.clicks = setInterval(() => {
+    //   this.totalClicks += 1
+    //   },1)
     },
   stopTimer(){
-    this.showBlock= false
-    clearInterval(this.time)
+    this.divLocation()  
+    this.clicks += 1
+    clearInterval(this.clicks)
+    this.$emit("clicks", this.clicks)
     this.$emit("end", this.reactionTime)
+    console.log(this.clicks)
+  
     },
   divLocation(){
     this.x = 50 + Math.random()*1428

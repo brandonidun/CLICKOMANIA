@@ -1,7 +1,13 @@
 <template>
   <h1>CLICKOMANIA</h1>
+  <select v-model="gameTime">
+    <option value="30000">easy(30secs)</option>
+    <option value="15000">mid(15secs)</option>
+    <option value="10000">hard(10secs)</option>
+  </select>
   <button @click="startGame()" :disabled="Playing">play</button>
-  <block v-if="Playing" v-bind:delay="delay" @end="endGame" />
+  <h1>{{this.prep}}</h1>
+  <block v-if="Playing" v-bind:delay="delay" :gameTime="gameTime" @clicks="endGame" />
   <results v-if="showResults" :score="score" />
 </template>
 
@@ -21,18 +27,32 @@ export default {
       score: null,
       Playing: false,
       showResults: false,
+      gameTime: "",
+      prep: "",
     };
   },
   methods: {
     startGame() {
-      this.delay = 1000 + Math.random() * 3000;
+      setTimeout( () => {
+        this.prep = "ready"
+      },0)
+      setTimeout( () => {
+        this.prep = "steady"
+      },1000)
+      setTimeout( () => {
+        this.prep = "click!"
+      },2500)
+      this.delay = 2500;
       this.Playing = true;
       this.showResults = false;
     },
-    endGame(reactionTime) {
-      this.score = reactionTime;
+    endGame(clicks) {
+      setTimeout(() => {
+      this.score = clicks;
       this.Playing = false;
       this.showResults = true;
+      }, this.gameTime)
+
     },
   },
 };
