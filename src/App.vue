@@ -1,22 +1,37 @@
 <template>
-  <h1>CLICKOMANIA</h1>
-  <select v-model="gameTime">
-    <option value="30000">easy(30secs)</option>
-    <option value="15000">mid(15secs)</option>
-    <option value="10000">hard(10secs)</option>
-  </select>
-  <button @click="startGame()" :disabled="Playing">play</button>
-  <h1>{{this.prep}}</h1>
-  <block v-if="Playing" v-bind:delay="delay" :gameTime="gameTime" @clicks="endGame" />
+  <div class="start-menu" v-if="showStartMenu">
+    <h1>CLICKOMANIA</h1>
+    <select v-model="gameTime">
+      <option value="10000">hard(10secs)</option>
+      <option value="15000">mid(15secs)</option>
+      <option value="30000">easy(30secs)</option>
+    </select>
+    <button @click="startGame()" :disabled="Playing">play</button>
+    <br />
+    <!-- <select v-model="Planet">
+    <option value="../public/mercury.jpg">mercury</option>
+    <option value="../public/venus.jpg">venus</option>
+    <option value="../public/neptune.jpg">neptune</option>
+    <option value="../public/jupiter.jpg">jupiter</option>
+  </select> -->
+  </div>
+  <h1 v-if="showPrep" id="prep">{{ this.prep }}</h1>
+  <block
+    v-if="Playing"
+    v-bind:delay="delay"
+    :planet="planet"
+    :gameTime="gameTime"
+    @clicks="endGame"
+  />
   <results v-if="showResults" :score="score" />
 </template>
 
 <script>
-import block from './components/block.vue';
-import results from './components/results.vue';
+import block from "./components/block.vue";
+import results from "./components/results.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     block,
     results,
@@ -27,64 +42,97 @@ export default {
       score: null,
       Playing: false,
       showResults: false,
-      gameTime: "",
+      showStartMenu: true,
+      gameTime: "10000",
+      showPrep: true,
       prep: "",
+      planet: "",
     };
   },
   methods: {
     startGame() {
-      setTimeout( () => {
-        this.prep = "ready"
-      },0)
-      setTimeout( () => {
-        this.prep = "steady"
-      },1000)
-      setTimeout( () => {
-        this.prep = "click!"
-      },2500)
-      this.delay = 2500;
+      this.clicks = 0;
+      console.log(12);
+      setTimeout(() => {
+        this.prep = "ready";
+      }, 0);
+      setTimeout(() => {
+        this.prep = "steady";
+      }, 1000);
+      setTimeout(() => {
+        this.prep = "GO!";
+      }, 2500);
+      setTimeout(() => {
+        this.showPrep = false;
+      }, 2700);
+      this.showStartMenu = false;
+      this.delay = 2800;
       this.Playing = true;
       this.showResults = false;
+      setTimeout(() => {
+        this.showStartMenu = true;
+        this.Playing = false;
+        this.showResults = true;
+      }, this.gameTime);
     },
     endGame(clicks) {
-      setTimeout(() => {
-      this.score = clicks;
-      this.Playing = false;
-      this.showResults = true;
-      }, this.gameTime)
-
+        this.score = clicks;
     },
   },
 };
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Fruktur&display=swap");
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: fruktur;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
-h1{
-  color: green;
-  font-size: xx-large;
-  font-weight: 300;
+.start-menu {
+  margin-top: 310px;
 }
-button{
-  color: green;
-  background-color: #bdbdbd;
+#prep {
+  margin-top: 450px;
+}
+h1 {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 70px;
+  font-weight: 100;
+}
+button {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.247);
   font-size: medium;
   border: none;
   width: 100px;
   height: 50px;
-  border-radius: 100px;
+  border-radius: 10px;
 }
-button:active{
+button:active {
   background-color: grey;
 }
-h3{
-  color: green;
+h3 {
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.562);
+}
+select {
+  color: white;
+  padding: 10px 6px;
+  margin-right: 20px;
+  background-color: rgba(255, 255, 255, 0.288);
+  border: none;
+  border-radius: 5px;
+}
+body {
+  background-image: url(../public/photo-1534796636912-3b95b3ab5986.jpeg);
+  background-size: cover;
+}
+.reaction-card {
+  background-image: url(../public/venus.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

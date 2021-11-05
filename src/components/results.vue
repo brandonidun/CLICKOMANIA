@@ -1,5 +1,6 @@
 <template>
-<h3>your total number of clicks were {{score}} </h3>
+<h3>your total number of clicks were:</h3>
+<h2> {{score}} </h2>
 </template>
 
 <script>
@@ -10,5 +11,8 @@ export default {
 </script>
 
 <style>
+h2{
+    font-size: 40px;
+}
 
 </style>

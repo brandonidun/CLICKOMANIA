@@ -1,6 +1,7 @@
 <template>
-  <div class="block" v-if="showBlock" @click="stopTimer()" :style="{left: x +'px', top: y +'px'}">
+  <div class="block" v-if="showBlock" @click="stopTimer()" :style="{left: x +'px', top: y +'px',}">
     <div class="reaction-card">
+    <img src="/public/297404.svg" alt="/">
     <h2>CLICK!</h2>
     </div> 
   </div>
@@ -8,7 +9,7 @@
 
 <script>
 export default {
-props: ['delay', 'gameTime'],
+props: ['delay', 'gameTime', 'planet'],
 data(){
   return {
     showBlock: false,
@@ -16,7 +17,7 @@ data(){
     reactionTime: 0,
     x: null,
     y: null,
-    clicks: null,
+    clicks: 0,
     totalClicks: 0,
   }
 },
@@ -39,15 +40,15 @@ methods: {
   stopTimer(){
     this.divLocation()  
     this.clicks += 1
-    clearInterval(this.clicks)
+    // clearInterval(this.clicks)
     this.$emit("clicks", this.clicks)
-    this.$emit("end", this.reactionTime)
+    // this.$emit("end", this.reactionTime)
     console.log(this.clicks)
   
     },
   divLocation(){
-    this.x = 50 + Math.random()*1428
-    this.y = 50 + Math.random()*685
+    this.x = (window.innerWidth - 200) * Math.random();
+    this.y = (window.innerHeight - 200) * Math.random(); 
   },
 }
 }
@@ -60,9 +61,10 @@ methods: {
   align-items: center;
   justify-content: center;
   position: fixed;
+  background-image: url(/public/photo-1465101162946-4377e57745c3.jpeg);
 }
 .reaction-card {
-  background-color: grey;
+  background-image: url(/public/venus.jpg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,6 +73,6 @@ methods: {
   height: 200px;
 }
 h2{
-  color: white;
+  color: rgba(255, 255, 255, 0.397);
 }
 </style>
